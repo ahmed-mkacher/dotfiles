@@ -95,7 +95,7 @@ maybe_create(
 -- Not tracked by dotfiles; each machine is different.
 -- Run `hyprctl monitors` to list your outputs.
 --
--- hl.monitor({ output = "", mode = "preferred", position = "0x0", scale = 1 })
+   hl.monitor({ output = "", mode = "preferred", position = "0x0", scale = 1 })
 --
 -- For NVIDIA hybrid-graphics (dGPU driving external monitors):
 --   hl.env("LIBVA_DRIVER_NAME", "nvidia")
