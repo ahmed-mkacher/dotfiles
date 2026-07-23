@@ -1,0 +1,290 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+
+  "logo": null,
+
+  "display": {
+    "separator": "  ",
+    "color": "white",
+    "brightColor": true,
+    "constants": ["\u001b[37m", "\u001b[38;5;16m", "\u001b[38;5;17m", "\u001b[38;5;18m"],
+    "bar": {
+      "char": {
+        "elapsed": "━",
+        "total": "─"
+      },
+      "border": {
+        "left": "[",
+        "right": "]"
+      },
+      "width": 12,
+      "color": {
+        "elapsed": "cyan",
+        "total": "white",
+        "border": "blue"
+      }
+    },
+    "percent": {
+      "type": ["num-color", "bar"],
+      "ndigits": 1,
+      "color": {
+        "green": "32",
+        "yellow": "93",
+        "red": "91"
+      }
+    },
+    "size": {
+      "binaryPrefix": "iec",
+      "ndigits": 2
+    }
+  },
+
+  "modules": [
+    "break",
+    {
+      "type": "custom",
+      "key": "╭─────────────────────────────────────────────────────────────────╮"
+    },
+    {
+      "type": "title",
+      "format": "│ {user-name-colored}@{host-name-colored}                                                 │",
+      "color": {
+        "user": "cyan",
+        "at": "white",
+        "host": "blue"
+      }
+    },
+    {
+      "type": "custom",
+      "key": "├─────────────────────────────────────────────────────────────────┤"
+    },
+
+    {
+      "type": "os",
+      "key": "│ {$2}󰍹{$1}  OS      ",
+      "format": "{$2}{pretty-name>50}{$1} │"
+    },
+    {
+      "type": "host",
+      "key": "│ {$2}󰌢{$1}  Host    ",
+      "format": "{$2}{name>50}{$1} │"
+    },
+    {
+      "type": "kernel",
+      "key": "│ {$2}{$1}  Kernel  ",
+      "format": "{$2}{release>50}{$1} │"
+    },
+    {
+      "type": "uptime",
+      "key": "│ {$2}󰔟{$1}  Uptime  ",
+      "format": "{$2}{formatted>50}{$1} │"
+    },
+    {
+      "type": "packages",
+      "key": "│ {$2}󰏖{$1}  Pkgs    ",
+      "format": "{$2}{all>50}{$1} │"
+    },
+    {
+      "type": "initsystem",
+      "key": "│ {$2}{$1}  Init    ",
+      "format": "{$2}{name>50}{$1} │"
+    },
+    {
+      "type": "custom",
+      "key": "├─────────────────────────────────────────────────────────────────┤"
+    },
+
+    {
+      "type": "command",
+      "key": "│ {$2}󰍹{$1}  Display ",
+      "text": "hyprctl monitors 2>/dev/null | grep -oE '[0-9]+x[0-9]+@[0-9.]+' | head -1 | awk -F'[@x]' 'BEGIN{OFS=\"x\"} {printf \"%50s\", $1\"x\"$2\" @ \"sprintf(\"%.2fHz\", $3)}' || printf '%50s' 'N/A'",
+      "format": "{$2}{}{$1} │"
+    },
+    {
+      "type": "de",
+      "key": "│ {$2}󰍹{$1}  DE      ",
+      "format": "{$2}{pretty-name>50}{$1} │"
+    },
+    {
+      "type": "wm",
+      "key": "│ {$2}󰍹{$1}  WM      ",
+      "format": "{$2}{pretty-name>50}{$1} │"
+    },
+    {
+      "type": "lm",
+      "key": "│ {$2}󰍹{$1}  Login   ",
+      "format": "{$2}{service>50}{$1} │"
+    },
+    {
+      "type": "theme",
+      "key": "│ {$2}󰍹{$1}  Theme   ",
+      "format": "{$2}{theme1>20} {theme2>29}{$1} │"
+    },
+    {
+      "type": "icons",
+      "key": "│ {$2}󰍹{$1}  Icons   ",
+      "format": "{$2}{icons1>20} {icons2>29}{$1} │"
+    },
+    {
+      "type": "terminal",
+      "key": "│ {$2}󰍹{$1}  Term    ",
+      "format": "{$2}{pretty-name>50}{$1} │"
+    },
+    {
+      "type": "shell",
+      "key": "│ {$2}{$1}  Shell   ",
+      "format": "{$2}{pretty-name>50}{$1} │"
+    },
+    {
+      "type": "terminalfont",
+      "key": "│ {$2}󰍹{$1}  Font    ",
+      "format": "{$2}{name>44} {size>5}{$1} │"
+    },
+    {
+      "type": "cursor",
+      "key": "│ {$2}󰆿{$1}  Cursor  ",
+      "format": "{$2}{theme>50}{$1} │"
+    },
+    {
+      "type": "editor",
+      "key": "│ {$2}󰍹{$1}  Editor  ",
+      "format": "{$2}{name>50}{$1} │"
+    },
+    {
+      "type": "sound",
+      "key": "│ {$2}󰍹{$1}  Sound   ",
+      "format": "{$2}{name>50}{$1} │"
+    },
+    {
+      "type": "custom",
+      "key": "├─────────────────────────────────────────────────────────────────┤"
+    },
+
+    {
+      "type": "cpu",
+      "key": "│ {$2}󰻠{$1}  CPU     ",
+      "format": "{$2}{name>38} @ {freq-max>9}{$1} │",
+      "showPeCoreCount": false
+    },
+    {
+      "type": "gpu",
+      "key": "│ {$2}󰾲{$1}  GPU     ",
+      "format": "{$2}{name>50}{$1} │",
+      "driverSpecific": false
+    },
+    {
+      "type": "command",
+      "key": "│ {$2}󰾲{$1}  VRAM    ",
+      "_comment": "Uses /sys/class/drm/card*/device/mem_info_vram_total (NVIDIA propietary driver). Falls back to 'Shared (system memory)' if not found. AMD users: the sysfs path and filename differ; adjust the shell command below accordingly.",
+      "text": "vram=$(cat /sys/class/drm/card*/device/mem_info_vram_total 2>/dev/null | head -1); if [ -n \"$vram\" ] && [ \"$vram\" -gt 0 ] 2>/dev/null; then awk -v v=\"$vram\" 'BEGIN{printf \"%50s\", v/1024/1024/1024\" GiB\"}'; else printf '%50s' 'Shared (system memory)'; fi",
+      "format": "{$2}{}{$1} │"
+    },
+    {
+      "type": "opencl",
+      "key": "│ {$2}󰾲{$1}  OpenCL  ",
+      "format": "{$2}{version>50}{$1} │"
+    },
+    {
+      "type": "vulkan",
+      "key": "│ {$2}󰾲{$1}  Vulkan  ",
+      "format": "{$2}{api-version>50}{$1} │"
+    },
+    {
+      "type": "board",
+      "key": "│ {$2}󰍛{$1}  Board   ",
+      "format": "{$2}{name>50}{$1} │"
+    },
+    {
+      "type": "chassis",
+      "key": "│ {$2}󰇅{$1}  Chassis ",
+      "format": "{$2}{type>50}{$1} │"
+    },
+    {
+      "type": "bios",
+      "key": "│ {$2}󰏓{$1}  BIOS    ",
+      "format": "{$2}{version>50}{$1} │"
+    },
+    {
+      "type": "custom",
+      "key": "├─────────────────────────────────────────────────────────────────┤"
+    },
+
+    {
+      "type": "memory",
+      "key": "│ {$2}󰍛{$1}  RAM     ",
+      "format": "{$2}{used>31} / {total>9} {percentage>6}{$1} │",
+      "percent": {
+        "type": 9,
+        "green": 40,
+        "yellow": 70
+      }
+    },
+    {
+      "type": "swap",
+      "key": "│ {$2}󰓡{$1}  Swap    ",
+      "format": "{$2}{used>31} / {total>9} {percentage>6}{$1} │",
+      "percent": {
+        "type": 9,
+        "green": 20,
+        "yellow": 50
+      }
+    },
+    {
+      "type": "disk",
+      "key": "│ {$2}󰋊{$1}  Disk    ",
+      "folders": "/",
+      "format": "{$2}{size-used>28} / {size-total>10} ({size-percentage>6}){$1} │",
+      "percent": {
+        "type": 9,
+        "green": 50,
+        "yellow": 75
+      }
+    },
+    {
+      "type": "physicaldisk",
+      "key": "│ {$2}󱛟{$1}  Phys    ",
+      "format": "{$2}{name>50}{$1} │"
+    },
+    {
+      "type": "custom",
+      "key": "├─────────────────────────────────────────────────────────────────┤"
+    },
+
+    {
+      "type": "datetime",
+      "key": "│ {$2}󰃰{$1}  Date    ",
+      "format": "{$2}{day-pretty>33}-{month-pretty}-{year} {hour-pretty}:{minute-pretty}:{second-pretty}{$1} │"
+    },
+    {
+      "type": "boottime",
+      "key": "│ {$2}󱫐{$1}  Boot    ",
+      "format": "{$2}{pretty>50}{$1} │"
+    },
+    {
+      "type": "loadavg",
+      "key": "│ {$2}󰍹{$1}  Load    ",
+      "format": "{$2}{loadavg1>36}, {loadavg2>5}, {loadavg3>5}{$1} │"
+    },
+    {
+      "type": "processes",
+      "key": "│ {$2}󰍹{$1}  Procs   ",
+      "format": "{$2}{result>50}{$1} │"
+    },
+    {
+      "type": "users",
+      "key": "│ {$2}󰍹{$1}  Users   ",
+      "format": "{$2}{name>50}{$1} │",
+      "compact": true
+    },
+    {
+      "type": "locale",
+      "key": "│ {$2}󰍹{$1}  Locale  ",
+      "format": "{$2}{result>50}{$1} │"
+    },
+    {
+      "type": "custom",
+      "key": "╰─────────────────────────────────────────────────────────────────╯"
+    },
+    "break"
+  ]
+}

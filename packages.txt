@@ -1,0 +1,25 @@
+# Personal applications
+fish
+foot
+starship
+tmux
+neovim
+fastfetch
+btop
+micro
+thunar
+stow
+
+# Development
+git
+ripgrep
+fd
+lazygit
+bat
+eza
+zoxide
+direnv
+jq
+
+# NVIDIA -- uncomment if you have an NVIDIA GPU
+# libva-nvidia-driver

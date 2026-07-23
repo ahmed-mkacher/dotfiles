@@ -1,0 +1,6 @@
+# Personal AUR packages
+paru
+zen-browser-bin
+zed
+mise-bin
+pacseek
