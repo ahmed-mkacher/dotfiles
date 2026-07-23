@@ -125,7 +125,7 @@ step_dotfiles() {
 	local backup_dir="$HOME/dotfiles-backup-$(date +%Y%m%d-%H%M%S)"
 	local did_backup=false
 
-	for module in hypr fish foot starship tmux nvim fastfetch btop thunar caelestia; do
+	for module in hypr fish foot starship tmux nvim fastfetch btop thunar caelestia mpv; do
 		if [ -d "$stow_dir/$module" ]; then
 			log "Stowing $module..."
 			if vrun stow --dir="$stow_dir" --target="$target_dir" -R "$module" 2>/dev/null; then
@@ -159,7 +159,45 @@ step_dotfiles() {
 	success "Dotfiles linked"
 }
 
-# ── 3. Post-install verification ──
+# ── 3. mpv — material-osc & thumbfast ──
+step_mpv() {
+	CURRENT_STEP="mpv"
+	header "Setting up mpv (material-osc + thumbfast)"
+
+	if [ -f "$DOTFILES/material-osc/bundle.py" ]; then
+		log "material-osc source found — building from source..."
+
+		local had_fonttools=false
+		if pacman -Q python-fonttools &>/dev/null; then
+			had_fonttools=true
+		fi
+		vrun sudo pacman -S --needed --noconfirm python-fonttools
+
+		vrun python3 "$DOTFILES/material-osc/bundle.py" 0.0.6
+
+		mkdir -p "$DOTFILES/config/mpv"/{fonts,scripts}
+		vrun cp "$DOTFILES/material-osc/build/0.0.6/fonts/"* \
+			"$DOTFILES/config/mpv/fonts/"
+		vrun cp "$DOTFILES/material-osc/build/0.0.6/scripts/"* \
+			"$DOTFILES/config/mpv/scripts/"
+
+		if ! $had_fonttools; then
+			vrun sudo pacman -R --noconfirm python-fonttools
+		fi
+		success "material-osc built and staged"
+	else
+		log "material-osc source not available — using pre-built config/mpv/ files"
+	fi
+
+	mkdir -p "$HOME/.config/mpv/scripts"
+	log "Downloading thumbfast.lua..."
+	vrun curl -fsSL \
+		"https://raw.githubusercontent.com/po5/thumbfast/master/thumbfast.lua" \
+		-o "$HOME/.config/mpv/scripts/thumbfast.lua"
+	success "thumbfast.lua installed"
+}
+
+# ── 4. Post-install verification ──
 step_verify() {
 	CURRENT_STEP="verify"
 	header "Post-install verification"
@@ -192,6 +230,7 @@ main() {
 
 	local steps=(
 		"packages:step_packages"
+		"mpv:step_mpv"
 		"dotfiles:step_dotfiles"
 		"verify:step_verify"
 	)

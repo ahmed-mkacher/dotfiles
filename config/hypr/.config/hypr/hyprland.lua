@@ -44,16 +44,6 @@ end
 -- Maybe set current colours to defaults
 maybe_copy(hypr .. "/scheme/default.lua", hypr .. "/scheme/current.lua")
 
--- User variables
-maybe_create(home .. "/.config/caelestia/hypr-vars.lua", "return {}\n")
-local overrides = require("hypr-vars")
-if type(overrides) == "table" then
-	local vars = require("variables")
-	for k, v in pairs(overrides) do
-		vars[k] = v
-	end
-end
-
 -- Monitors are auto-detected by default. If you need explicit placement
 -- (e.g. multi-monitor layout, specific resolution/refresh), add hl.monitor()
 -- blocks here. Run `hyprctl monitors` to list your outputs.
@@ -97,6 +87,22 @@ require("hyprland.rules")
 require("hyprland.gestures")
 require("hyprland.keybinds")
 
--- User configs
-maybe_create(home .. "/.config/caelestia/hypr-user.lua")
+-- User configs — machine-specific (not tracked in dotfiles)
+maybe_create(
+	home .. "/.config/caelestia/hypr-user.lua",
+	[[
+-- Machine-specific Hyprland overrides — edit for THIS machine.
+-- Not tracked by dotfiles; each machine is different.
+-- Run `hyprctl monitors` to list your outputs.
+--
+-- hl.monitor({ output = "", mode = "preferred", position = "0x0", scale = 1 })
+--
+-- For NVIDIA hybrid-graphics (dGPU driving external monitors):
+--   hl.env("LIBVA_DRIVER_NAME", "nvidia")
+--   hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
+--   hl.env("GBM_BACKEND", "nvidia-drm")
+--   hl.env("AQ_DRM_DEVICES", home .. "/.config/hypr/nvidia-card:" .. home .. "/.config/hypr/intel-card")
+--   hl.config({ cursor = { no_hardware_cursors = true } })
+--]]
+)
 require("hypr-user")
