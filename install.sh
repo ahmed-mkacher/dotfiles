@@ -150,7 +150,16 @@ step_dotfiles() {
           mkdir -p "$backup_dir"
           did_backup=true
         fi
-        vrun stow --dir="$stow_dir" --target="$target_dir" --adopt "$module"
+        if ! vrun stow --dir="$stow_dir" --target="$target_dir" --adopt "$module" 2>/dev/null; then
+          warn "$module --adopt failed, removing conflicts and retrying..."
+          # stow --adopt fails on pre-existing symlinks; remove them and retry
+          stow --dir="$stow_dir" --target="$target_dir" -n "$module" 2>&1 | \
+            sed -n 's/.*existing target is not owned by stow: //p' | \
+            while IFS= read -r conflict; do
+              rm -f "$target_dir/$conflict"
+            done
+          vrun stow --dir="$stow_dir" --target="$target_dir" -R "$module"
+        fi
       fi
     fi
   done
