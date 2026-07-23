@@ -175,11 +175,11 @@ step_mpv() {
 
 		vrun python3 "$DOTFILES/material-osc/bundle.py" 0.0.6
 
-		mkdir -p "$DOTFILES/config/mpv"/{fonts,scripts}
+		mkdir -p "$DOTFILES/config/mpv/.config/mpv"/{fonts,scripts}
 		vrun cp "$DOTFILES/material-osc/build/0.0.6/fonts/"* \
-			"$DOTFILES/config/mpv/fonts/"
+			"$DOTFILES/config/mpv/.config/mpv/fonts/"
 		vrun cp "$DOTFILES/material-osc/build/0.0.6/scripts/"* \
-			"$DOTFILES/config/mpv/scripts/"
+			"$DOTFILES/config/mpv/.config/mpv/scripts/"
 
 		if ! $had_fonttools; then
 			vrun sudo pacman -R --noconfirm python-fonttools
