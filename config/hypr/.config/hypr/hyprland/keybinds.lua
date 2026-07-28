@@ -188,7 +188,6 @@ hl.bind("SUPER + SHIFT + Z", hl.dsp.exec_cmd(vars.sleepGestureCmd), { locked = t
 
 -- Clipboard and emoji picker
 hl.bind("SUPER + V", hl.dsp.global("caelestia:launcherClipboard"))
-hl.bind("SUPER + ALT + V", hl.dsp.global("caelestia:launcherClipboard"))
 hl.bind("SUPER + Period", hl.dsp.global("caelestia:launcherEmoji"))
 hl.bind(
 	"CTRL + SHIFT + ALT + V",

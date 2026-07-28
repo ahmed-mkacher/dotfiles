@@ -41,6 +41,7 @@ if status is-interactive
     abbr ff fastfetch
     abbr of onefetch
     abbr fame git-fame
+    abbr reload 'source ~/.config/fish/config.fish'
 
     # ls Abbrs
     abbr l ls

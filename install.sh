@@ -220,7 +220,40 @@ step_mpv() {
   success "thumbfast.lua installed"
 }
 
-# ── 4. Post-install verification ──
+# ── 4. Caelestia dynamic scheme ──
+step_caelestia_scheme() {
+  CURRENT_STEP="caelestia_scheme"
+  header "Enabling dynamic colour scheme (wallpaper-based)"
+  local shell_json="$HOME/.config/caelestia/shell.json"
+
+  if ! command -v caelestia &>/dev/null; then
+    log "caelestia not installed — skipping scheme setup"
+    return
+  fi
+
+  if [ -f "$shell_json" ]; then
+    log "Enabling smartScheme in shell.json..."
+    local tmp_json="${shell_json}.tmp.$$"
+    if jq '.services.smartScheme = true' "$shell_json" > "$tmp_json" 2>/dev/null; then
+      mv "$tmp_json" "$shell_json"
+      success "smartScheme enabled"
+    else
+      rm -f "$tmp_json"
+      warn "Failed to update shell.json — jq may not be available"
+    fi
+  else
+    warn "shell.json not found at $shell_json — skipping smartScheme"
+  fi
+
+  log "Switching to dynamic (wallpaper-derived) scheme..."
+  if caelestia scheme set -n dynamic 2>/dev/null; then
+    success "Scheme set to dynamic"
+  else
+    warn "caelestia scheme set failed — run manually: caelestia scheme set -n dynamic"
+  fi
+}
+
+# ── 5. Post-install verification ──
 step_verify() {
   CURRENT_STEP="verify"
   header "Post-install verification"
@@ -255,6 +288,7 @@ main() {
     "packages:step_packages"
     "mpv:step_mpv"
     "dotfiles:step_dotfiles"
+    "caelestia_scheme:step_caelestia_scheme"
     "verify:step_verify"
   )
 
